@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "TMCache.h"
+#import "WTHPClient.h"
 
 @interface ViewController ()
 
@@ -17,6 +19,32 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
+
+
+
+
+
+  NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"user.json"];
+  NSData *data = [NSData dataWithContentsOfFile:path];
+
+
+  NSDictionary *user = [NSJSONSerialization JSONObjectWithData:data
+                                                       options:NSJSONReadingMutableLeaves
+                                                         error:nil];
+
+
+  [WTHPClient setupSharedClientWithUsername:user[@"username"] password:user[@"password"]];
+
+
+//  [client getUserInfoById:@"33333" onComplete:^(id a, id b){}];
+//  [client getAllGroup onComplete:^(id a, id b){}];
+//  [client getSubjectWithGroup:@"" subject:@"" onComplete:^(id a, id b){}]
+//
+//
+//
+//  [client postToGroup:@"" type:@"" subject:@"" content:@"" onComplete:^(id a, id b){}];
+//  [client relayToSubject:@"" content:@""]
+
 }
 
 - (void)didReceiveMemoryWarning {
