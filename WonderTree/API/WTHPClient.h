@@ -25,9 +25,48 @@ static NSString *const USER_AGENT  = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10
 + (instancetype)clientWithUsername:(NSString *)username
                           password:(NSString *)password;
 
+- (void)getUserInfoById:(NSString *)string
+             onComplete:(void (^) (WTHPUser *, id))complete;
 
 + (WTHPClient *)sharedClient;
 
 + (void)setupSharedClientWithUsername:(NSString *)string
                              password:(NSString *)password;
+
++ (NSArray *)currentUserCookie;
+
 @end
+
+@interface WTHPUser : NSObject
+
+//用户id
+@property (nonatomic, strong) NSString  *uid;
+//用户昵称
+@property (nonatomic, strong) NSString  *username;
+//用户性别
+@property (nonatomic, strong) NSString  *sex;
+//注册日期
+@property (nonatomic, strong) NSDate    *regDate;
+//最后发帖
+@property (nonatomic, strong) NSDate    *lastPost;
+//上次登录
+@property (nonatomic, strong) NSDate    *lastCheck;
+//阅读权限
+@property (nonatomic, strong) NSString  *permission;
+//发帖级别
+@property (nonatomic, strong) NSString  *level;
+//发帖总数
+@property (nonatomic, strong) NSNumber *postCount;
+//积分
+@property (nonatomic, strong) NSString *exploit;
+//介绍
+@property (nonatomic, strong) NSString  *introduction;
+
+- (instancetype)initWithUid:(NSString *)uid;
+
++ (instancetype)userWithUid:(NSString *)uid;
+
+
+@end
+
+

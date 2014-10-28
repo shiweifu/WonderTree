@@ -10,6 +10,8 @@
 #import <STHTTPRequest.h>
 #import "WTHPClient.h"
 #import "WTUtils.h"
+#import "NSString+ObjectiveSugar.h"
+#import "NSArray+ObjectiveSugar.h"
 
 
 static  WTHPClient *_instance = nil;
@@ -46,6 +48,8 @@ static  WTHPClient *_instance = nil;
 //login and refresh user info
 - (BOOL)login
 {
+  //clean shared storeage cookie
+  [STHTTPRequest clearSession];
   BOOL result = NO;
   NSDictionary *params = @{@"username": self.username,
                            @"password": [self.password md5],
@@ -53,20 +57,34 @@ static  WTHPClient *_instance = nil;
                            @"answder": @"" ,
                            @"loginsubmit": @"true",
                            @"cookietime": @259200};
-//  STHTTPRequest *request = [self requestWithURL:URL_LOGIN];
   STHTTPRequest *request = [STHTTPRequest requestWithURLString:URL_LOGIN];
-  [request setHTTPMethod:@"POST"];
-  [request setHeaderWithName:@"User-Agent" value:USER_AGENT];
+//  [request setHTTPMethod:@"POST"];
   [request setPOSTDictionary:params];
+  [request setHeaderWithName:@"User-Agent" value:USER_AGENT];
 
   NSError *err = nil;
   NSString *responseString = [request startSynchronousWithError:&err];
   if([responseString containsString:@"欢迎您回来"])
   {
-    result = YES;
-    //TODO  get token
+    NSDictionary *headers = request.responseHeaders;
+    NSString *cookies = headers[@"Set-Cookie"];
 
+    NSArray *tmp = [cookies split:@";"];
 
+    for (NSUInteger i = 0; i < tmp.count; ++i)
+    {
+      NSString *s = tmp[i];
+      NSArray *pies = [s split:@"="];
+
+      NSLog(@"your pies: %@", pies);
+
+      if([[pies[0] strip] isEqualToString:@"cdb_auth"])
+      {
+        self.authToken = pies[1];
+        result = YES;
+        break;
+      }
+    }
   }
 
   self.isLogined = result;
@@ -103,4 +121,39 @@ static  WTHPClient *_instance = nil;
   return request;
 }
 
+
++ (NSArray *)currentUserCookie {
+  NSHTTPCookieStorage *sharedCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+  NSArray *cookies = [sharedCookieStorage cookies];
+  return cookies;
+}
+
+- (void)getUserInfoById:(NSString *)string
+             onComplete:(void (^) (WTHPUser *, id))complete
+{
+
+}
+
 @end
+
+
+@implementation WTHPUser
+
+- (instancetype)initWithUid:(NSString *)uid
+{
+  self = [super init];
+  if (self)
+  {
+    _uid = uid;
+  }
+
+  return self;
+}
+
++ (instancetype)userWithUid:(NSString *)uid
+{
+  return [[self alloc] initWithUid:uid];
+}
+
+@end
+

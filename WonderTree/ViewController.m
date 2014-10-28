@@ -34,9 +34,14 @@
 
 
   [WTHPClient setupSharedClientWithUsername:user[@"username"] password:user[@"password"]];
+  WTHPClient *client = [WTHPClient sharedClient];
 
 
-//  [client getUserInfoById:@"33333" onComplete:^(id a, id b){}];
+  [client getUserInfoById:@"33333" onComplete:^(WTHPUser *user, id ext){
+
+
+
+  }];
 //  [client getAllGroup onComplete:^(id a, id b){}];
 //  [client getSubjectWithGroup:@"" subject:@"" onComplete:^(id a, id b){}]
 //
