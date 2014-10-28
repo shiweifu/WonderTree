@@ -16,6 +16,7 @@
 		68516B5C19FD08CB00AFBF36 /* WonderTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68516B5B19FD08CB00AFBF36 /* WonderTreeTests.m */; };
 		68516B6819FD0AEF00AFBF36 /* WTHPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 68516B6719FD0AEF00AFBF36 /* WTHPClient.m */; };
 		83137C59190CB20DB6BFFCBB /* libPods-WonderTree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5427F592D8BDB122CA8A0AD7 /* libPods-WonderTree.a */; };
+		E198836A291766B1EA6E1F9A /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = E19881666A840778D21CE16A /* test.html */; };
 		E198876E17AB37C80984809B /* WTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E19888ACB8700861998F1EDD /* WTUtils.m */; };
 		E1988F7577EADEC59A4D14CA /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = E1988986C972D4A9F2346DEF /* user.json */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		68516B6719FD0AEF00AFBF36 /* WTHPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTHPClient.m; sourceTree = "<group>"; };
 		841D8C03044E04285011DC0A /* Pods-WonderTree.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WonderTree.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WonderTree/Pods-WonderTree.debug.xcconfig"; sourceTree = "<group>"; };
 		C197C44540C7BF372531E409 /* Pods-WonderTree.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WonderTree.release.xcconfig"; path = "Pods/Target Support Files/Pods-WonderTree/Pods-WonderTree.release.xcconfig"; sourceTree = "<group>"; };
+		E19881666A840778D21CE16A /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		E198841F8003BB667C2754F3 /* WTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTUtils.h; sourceTree = "<group>"; };
 		E19888ACB8700861998F1EDD /* WTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTUtils.m; sourceTree = "<group>"; };
 		E1988986C972D4A9F2346DEF /* user.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = user.json; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				68516B4E19FD08CB00AFBF36 /* LaunchScreen.xib */,
 				68516B3F19FD08CB00AFBF36 /* Supporting Files */,
 				E1988986C972D4A9F2346DEF /* user.json */,
+				E19881666A840778D21CE16A /* test.html */,
 			);
 			path = WonderTree;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				68516B5019FD08CB00AFBF36 /* LaunchScreen.xib in Resources */,
 				68516B4D19FD08CB00AFBF36 /* Images.xcassets in Resources */,
 				E1988F7577EADEC59A4D14CA /* user.json in Resources */,
+				E198836A291766B1EA6E1F9A /* test.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

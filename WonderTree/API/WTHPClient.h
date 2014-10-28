@@ -7,10 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
 
-static NSString *const URL_LOGIN = @"http://www.hi-pda.com/forum/logging.php?action=login&loginsubmit=yes&inajax=1";
-static NSString *const URL_DISCOVER   = @"http://www.hi-pda.com/forum/forumdisplay.php?fid=2";
-static NSString *const USER_AGENT  = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.22 (KHTML, like Gecko) Version/8.0";
+@class WTHPUser;
+
+static NSString *const URL_LOGIN        = @"http://www.hi-pda.com/forum/logging.php?action=login&loginsubmit=yes&inajax=1";
+static NSString *const URL_DISCOVER     = @"http://www.hi-pda.com/forum/forumdisplay.php?fid=2";
+static NSString *const URL_USERNAME_FMT = @"http://www.hi-pda.com/forum/space.php?username=%@";
+static NSString *const USER_AGENT       = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.22 (KHTML, like Gecko) Version/8.0";
+
+
+//Regex
+static NSString *const REGEX_MATCH_USERINFO = @"<li>(.*?)<";
+static NSString *const REGEX_MATCH_USERNAME = @"<h1>(.*)</h1>";
 
 @interface WTHPClient : NSObject
 
@@ -29,6 +39,9 @@ static NSString *const USER_AGENT  = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10
              onComplete:(void (^) (WTHPUser *, id))complete;
 
 + (WTHPClient *)sharedClient;
+
+- (void)getUserInfoByUsername:(NSString *)string
+                   onComplete:(void (^) (WTHPUser *, id))complete;
 
 + (void)setupSharedClientWithUsername:(NSString *)string
                              password:(NSString *)password;
@@ -50,7 +63,7 @@ static NSString *const USER_AGENT  = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10
 //最后发帖
 @property (nonatomic, strong) NSDate    *lastPost;
 //上次登录
-@property (nonatomic, strong) NSDate    *lastCheck;
+@property (nonatomic, strong) NSString  *lastCheck;
 //阅读权限
 @property (nonatomic, strong) NSString  *permission;
 //发帖级别
@@ -62,10 +75,9 @@ static NSString *const USER_AGENT  = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10
 //介绍
 @property (nonatomic, strong) NSString  *introduction;
 
-- (instancetype)initWithUid:(NSString *)uid;
 
-+ (instancetype)userWithUid:(NSString *)uid;
-
+- (instancetype)initWithPage:(NSString *)page;
++ (instancetype)userWithPage:(NSString *)page;
 
 @end
 

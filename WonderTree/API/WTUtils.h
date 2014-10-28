@@ -4,14 +4,40 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ObjectiveSugar/NSArray+ObjectiveSugar.h>
 
+static NSString *const kSearchCaseSensitiveKey = @"kSearchCaseSensitiveKey";
+static NSString *const kSearchWholeWordsKey    = @"kSearchWholeWordsKey";
 
 @interface WTUtils : NSObject
 
 + (NSString *)GBKresponse2String:(id) responseObject;
+
++ (NSRegularExpression *)regularExpressionWithString:(NSString *)string options:(NSDictionary *)options;
+
++ (NSArray *)captureString:(NSString *)str withRegex:(NSString *)regexStr;
 
 @end
 
 @interface NSString (MD5)
 - (NSString *)md5;
 @end
+
+
+
+@interface NSDate (string)
+
+- (NSString *)stringWithFormat:(NSString *)format;
+
++ (NSDate *)dateFromString:(NSString *)string;
+
++ (NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format;
+
++ (NSDate *)firstDayOfMonth;
+
++ (NSDate *)lastDayOfMonth;
+
+- (NSInteger)numberOfDaysInMonthCount;
+
+@end
+

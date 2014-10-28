@@ -28,3 +28,4 @@ DerivedData
 user.json
 Pods/
 Podfile.lock
+test*
