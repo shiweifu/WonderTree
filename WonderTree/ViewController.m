@@ -8,9 +8,9 @@
 
 #import "ViewController.h"
 #import "TMCache.h"
-#import "WTHPClient.h"
 #import "WTUtils.h"
 #import "NSArray+ObjectiveSugar.h"
+#import "WTHPClient.h"
 
 @interface ViewController ()
 
@@ -48,6 +48,13 @@
       NSLog(@"%@", user);
     }
   }];
+
+  [client getGroupByFid:@"2"
+                   page:@"1"
+             onComplete:^(NSArray *posts, id ext){
+
+  }];
+
 
 
 //  [client getAllGroup onComplete:^(id a, id b){}];

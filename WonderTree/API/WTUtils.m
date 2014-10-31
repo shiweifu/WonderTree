@@ -5,10 +5,90 @@
 
 #import <CommonCrypto/CommonDigest.h>
 #import "WTUtils.h"
+#import "NSString+HTML.h"
+#import "NSString+Additions.h"
 
 @implementation WTUtils
 {
 
+}
+
+
+//
+//method copy from https://github.com/wujichao/hipda_ios_client_v3/
+//
++ (NSArray *)extractThreads:(NSString *)string {
+
+  //NSLog(@"html : \n%@", string);
+
+  string = [string stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+  NSRange range = [string rangeOfString:@"normalthread_"];
+  string = [string substringFromIndex:range.location];
+
+  NSError *error;
+  NSRegularExpression *regex = [NSRegularExpression
+          regularExpressionWithPattern:@"<span id=\"thread_(\\d+)\"><a ([^>]+)>(.*?)</a>(.*?)<a href=\"space\\.php\\?uid=(\\d+)\">(.*?)</a>\n</cite>\n<em>([^<]+)</em>\n</td>\n<td class=\"nums\"><strong>(\\d+)</strong>/<em>(\\d+)</em></td>"
+                               options:NSRegularExpressionDotMatchesLineSeparators
+                                 error:&error
+  ];
+
+  __block NSMutableArray *threadsArray = [NSMutableArray arrayWithCapacity:42];
+
+  [regex enumerateMatchesInString:string
+                          options:0
+                            range:NSMakeRange(0, string.length)
+                       usingBlock:
+                               ^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+
+                                 NSString *tidString = [string  substringWithRange:[result rangeAtIndex:1]];
+                                 NSString *aString = [string  substringWithRange:[result rangeAtIndex:2]];
+                                 NSString *title = [string  substringWithRange:[result rangeAtIndex:3]];
+                                 NSString *otherString = [string  substringWithRange:[result rangeAtIndex:4]];
+                                 NSString *uidString = [string  substringWithRange:[result rangeAtIndex:5]];
+                                 NSString *username = [string  substringWithRange:[result rangeAtIndex:6]];
+                                 NSString *dateString = [string  substringWithRange:[result rangeAtIndex:7]];
+                                 NSString *replyCountString = [string  substringWithRange:[result rangeAtIndex:8]];
+                                 NSString *openCountString = [string  substringWithRange:[result rangeAtIndex:9]];
+
+                                 title = [title stringByDecodingHTMLEntities];
+
+
+                                 NSString *titleColorString = [aString stringBetweenString:@"color: #" andString:@"\""];
+                                 UIColor *titleColor = nil;
+                                 if (titleColorString) {
+                                   titleColor = [titleColorString colorFromHexString];
+                                 }
+
+                                 BOOL hasImage = NO; BOOL hasAttach = NO;
+                                 if ([otherString containsString:@"图片附件"]) {
+                                   hasImage = YES;
+                                   title = [NSString stringWithFormat:@"%@ \U0001F4CE", title];
+                                 } else if ([otherString containsString:@"附件"]) {
+                                   hasAttach = YES;
+                                   title = [NSString stringWithFormat:@"%@ \U0001F4CE", title];
+                                 }
+
+                                 NSDictionary *userAttributes = @{
+                                         @"uid":uidString,
+                                         @"username":username
+                                 };
+                                 //NSLog(@" %d %d %@ ",hasImage,hasAttach,title );
+                                 NSDictionary *postAttributes = @{
+                                         @"tid":tidString,
+                                         @"title":title,
+                                         @"titleColor":(titleColor?titleColor:[NSNull null]),
+                                         @"date":dateString,
+                                         @"replyCount":replyCountString,
+                                         @"openCount":openCountString,
+                                         @"hasImage":(hasImage?@YES:@NO),
+                                         @"hasAttach":(hasAttach?@YES:@NO),
+                                         @"user":userAttributes
+                                 };
+
+                                 [threadsArray addObject:postAttributes];
+                               }];
+
+  return threadsArray;
 }
 
 + (NSString *)GBKresponse2String:(id) responseObject {

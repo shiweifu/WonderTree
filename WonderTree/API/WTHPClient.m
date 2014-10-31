@@ -12,6 +12,7 @@
 #import "WTUtils.h"
 #import "NSString+ObjectiveSugar.h"
 #import "NSArray+ObjectiveSugar.h"
+#import "NSDictionary+ObjectiveSugar.h"
 
 
 static  WTHPClient *_instance = nil;
@@ -24,7 +25,6 @@ static  WTHPClient *_instance = nil;
 @end
 
 @implementation WTHPClient
-
 
 - (instancetype)initWithUsername:(NSString *)username
                         password:(NSString *)password
@@ -99,7 +99,6 @@ static  WTHPClient *_instance = nil;
                                     password:password];
 }
 
-
 - (STHTTPRequest *)requestWithURL:(NSString *)url {
   if(!self.authCookie) {
     return nil;
@@ -139,6 +138,40 @@ static  WTHPClient *_instance = nil;
   [request setErrorBlock:^(NSError *error)
   {
     complete(nil, error);
+  }];
+  [request startAsynchronous];
+}
+
+- (void)getGroupByFid:(NSString *)fid
+                 page:(NSString *)page
+           onComplete:(void (^) (NSArray *, id))complete
+{
+
+  NSString *url = NSStringWithFormat(URL_GROUP_FMT, fid, page);
+  STHTTPRequest *request = [self requestWithURL:url];
+
+  __block STHTTPRequest *tmpReq = request;
+  [request setCompletionBlock:^(NSDictionary *headers, NSString *body)
+  {
+    if(!body && tmpReq.responseData) {
+      SEL sel = NSSelectorFromString(@"stringWithData:encodingName:");
+      body = ((id (*)(id, SEL, id, id))objc_msgSend)(tmpReq, sel, tmpReq.responseData, @"GBK");
+    }
+
+    NSArray *arr = [WTUtils extractThreads:body];
+
+    arr = [arr map:^id (NSDictionary *object)
+    {
+      WTHPGroup *group = [[WTHPGroup alloc] initWithDict:object];
+      return group;
+    }];
+
+    complete(arr, nil);
+  }];
+
+  [request setErrorBlock:^(NSError *error)
+  {
+    NSLog(@"%@", error);
   }];
   [request startAsynchronous];
 }
@@ -199,6 +232,90 @@ static  WTHPClient *_instance = nil;
 {
   return [[self alloc] initWithPage:page];
 }
+
+@end
+
+
+@implementation WTHPGroup
+
++ (NSArray *)groupsTitle {
+  return  @[
+          @"删除该板块",
+          @"Discovery",
+          @"Buy & Sell",
+          @"PalmOS",
+          @"PocketPC",
+          @"E-INK",
+          @"Smartphone",
+          @"已完成交易",
+          @"DC,NB,MP3",
+          @"Geek Talks",
+          @"意欲蔓延",
+          @"iOS",
+          @"疑似机器人",
+          @"吃喝玩乐",
+          @"Joggler",
+          @"La Femme",
+          @"麦客爱苹果",
+          @"随笔与文集",
+          @"站务与公告",
+          @"只讨论2.0",
+          @"Google"
+  ];
+}
+
++ (NSDictionary *)groupsDict {
+  return @{
+          @"Discovery": @2,
+          @"Buy & Sell": @6,
+          @"PalmOS": @12,
+          @"PocketPC": @14,
+          @"E-INK": @59,
+          @"Smartphone": @9,
+          @"已完成交易": @63,
+          @"DC,NB,MP3": @50,
+          @"Geek Talks": @7,
+          @"意欲蔓延": @24,
+          @"iOS": @56,
+          @"疑似机器人": @57,
+          @"吃喝玩乐": @25,
+          @"Joggler": @62,
+          @"La Femme": @51,
+          @"麦客爱苹果": @22,
+          @"随笔与文集": @23,
+          @"站务与公告": @5,
+          @"只讨论2.0": @64,
+          @"Google": @60
+  };
+}
+
+
+- (instancetype)initWithDict:(NSDictionary *)dict
+{
+  self = [super init];
+  if (self)
+  {
+    _dict = dict;
+    [dict each:^(NSString *key, id value)
+    {
+      if([key isEqualToString:@"user"])
+      {
+        self.uid = value[@"uid"];
+        self.username = value[@"username"];
+        return;
+      }
+      [self setValue:value forKey:key];
+    }];
+  }
+
+  return self;
+}
+
++ (instancetype)groupWithDict:(NSDictionary *)dict
+{
+  return [[self alloc] initWithDict:dict];
+}
+
 
 @end
 

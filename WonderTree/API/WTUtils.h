@@ -17,6 +17,8 @@ static NSString *const kSearchWholeWordsKey    = @"kSearchWholeWordsKey";
 
 + (NSArray *)captureString:(NSString *)str withRegex:(NSString *)regexStr;
 
++ (NSArray *)extractThreads:(NSString *)string;
+
 @end
 
 @interface NSString (MD5)

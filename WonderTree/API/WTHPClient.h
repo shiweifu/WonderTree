@@ -14,6 +14,7 @@
 
 static NSString *const URL_LOGIN        = @"http://www.hi-pda.com/forum/logging.php?action=login&loginsubmit=yes&inajax=1";
 static NSString *const URL_DISCOVER     = @"http://www.hi-pda.com/forum/forumdisplay.php?fid=2";
+static NSString *const URL_GROUP_FMT    = @"http://www.hi-pda.com/forum/forumdisplay.php?fid=%@&page=%@";
 static NSString *const URL_USERNAME_FMT = @"http://www.hi-pda.com/forum/space.php?username=%@";
 static NSString *const USER_AGENT       = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.22 (KHTML, like Gecko) Version/8.0";
 
@@ -46,8 +47,9 @@ static NSString *const REGEX_MATCH_USERNAME = @"<h1>(.*)</h1>";
 + (void)setupSharedClientWithUsername:(NSString *)string
                              password:(NSString *)password;
 
-+ (NSArray *)currentUserCookie;
-
+- (void)getGroupByFid:(NSString *)string
+                 page:(NSString *)page
+           onComplete:(void (^) (NSArray *, id))complete;
 @end
 
 @interface WTHPUser : NSObject
@@ -78,6 +80,34 @@ static NSString *const REGEX_MATCH_USERNAME = @"<h1>(.*)</h1>";
 
 - (instancetype)initWithPage:(NSString *)page;
 + (instancetype)userWithPage:(NSString *)page;
+
+@end
+
+
+@interface WTHPGroup : NSObject
+
++ (NSDictionary *)groupsDict;
++ (NSArray *)groupsTitle;
+
+
+@property (nonatomic, strong) NSDictionary *dict;
+
+@property (nonatomic, strong) NSString *tid;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *titleColor;
+@property (nonatomic, strong) NSString *date;
+@property (nonatomic, strong) NSString *replyCount;
+@property (nonatomic, strong) NSString *openCount;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSNumber *uid;
+
+@property (nonatomic, assign) NSNumber *hasImage;
+@property (nonatomic, assign) NSNumber *hasAttach;
+
+- (instancetype)initWithDict:(NSDictionary *)dict;
+
++ (instancetype)groupWithDict:(NSDictionary *)dict;
+
 
 @end
 

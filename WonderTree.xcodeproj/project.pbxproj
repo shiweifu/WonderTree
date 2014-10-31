@@ -17,7 +17,9 @@
 		68516B6819FD0AEF00AFBF36 /* WTHPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 68516B6719FD0AEF00AFBF36 /* WTHPClient.m */; };
 		83137C59190CB20DB6BFFCBB /* libPods-WonderTree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5427F592D8BDB122CA8A0AD7 /* libPods-WonderTree.a */; };
 		E198836A291766B1EA6E1F9A /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = E19881666A840778D21CE16A /* test.html */; };
+		E1988407600796D2C77C9F83 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E19889EFED883B92B99FB145 /* NSString+Additions.m */; };
 		E198876E17AB37C80984809B /* WTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E19888ACB8700861998F1EDD /* WTUtils.m */; };
+		E1988C6AA71E4CA3F0985B1C /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = E1988CD9F89B71A7F0A3A956 /* NSString+HTML.m */; };
 		E1988F7577EADEC59A4D14CA /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = E1988986C972D4A9F2346DEF /* user.json */; };
 /* End PBXBuildFile section */
 
@@ -52,8 +54,12 @@
 		C197C44540C7BF372531E409 /* Pods-WonderTree.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WonderTree.release.xcconfig"; path = "Pods/Target Support Files/Pods-WonderTree/Pods-WonderTree.release.xcconfig"; sourceTree = "<group>"; };
 		E19881666A840778D21CE16A /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		E198841F8003BB667C2754F3 /* WTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTUtils.h; sourceTree = "<group>"; };
+		E1988515C4CCCE634837F8A3 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		E19885F5E5CA4E01ADB82352 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		E19888ACB8700861998F1EDD /* WTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTUtils.m; sourceTree = "<group>"; };
 		E1988986C972D4A9F2346DEF /* user.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = user.json; sourceTree = "<group>"; };
+		E19889EFED883B92B99FB145 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
+		E1988CD9F89B71A7F0A3A956 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,7 @@
 				68516B3F19FD08CB00AFBF36 /* Supporting Files */,
 				E1988986C972D4A9F2346DEF /* user.json */,
 				E19881666A840778D21CE16A /* test.html */,
+				E198891934C3DD3E119459F3 /* Ventor */,
 			);
 			path = WonderTree;
 			sourceTree = "<group>";
@@ -165,6 +172,17 @@
 				C197C44540C7BF372531E409 /* Pods-WonderTree.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E198891934C3DD3E119459F3 /* Ventor */ = {
+			isa = PBXGroup;
+			children = (
+				E19885F5E5CA4E01ADB82352 /* NSString+HTML.h */,
+				E1988CD9F89B71A7F0A3A956 /* NSString+HTML.m */,
+				E1988515C4CCCE634837F8A3 /* NSString+Additions.h */,
+				E19889EFED883B92B99FB145 /* NSString+Additions.m */,
+			);
+			path = Ventor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,6 +329,8 @@
 				68516B4519FD08CB00AFBF36 /* AppDelegate.m in Sources */,
 				68516B4219FD08CB00AFBF36 /* main.m in Sources */,
 				E198876E17AB37C80984809B /* WTUtils.m in Sources */,
+				E1988C6AA71E4CA3F0985B1C /* NSString+HTML.m in Sources */,
+				E1988407600796D2C77C9F83 /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
